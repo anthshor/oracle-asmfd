@@ -1,0 +1,69 @@
+root@whister ~]# su - grid
+[grid@whister ~]$ . oraenv
+ORACLE_SID = [grid] ? +ASM
+The Oracle base has been set to /u01/app/grid
+[grid@whister ~]$ asmcmd dsget
+parameter:
+profile:
+[grid@whister ~]$ asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      5128     4897                0            4897              0             N  DATA/
+MOUNTED  EXTERN  N         512   4096  1048576      5128     3384                0            3384              0             N  FRA/
+
+[grid@whister ~]$ asmcmd lsdsk -G data
+Path
+/dev/sdb
+[grid@whister ~]$ srvctl status asm
+ASM is running on whister
+[grid@whister ~]$ asmcmd spget
++DATA/ASM/ASMPARAMETERFILE/registry.253.890916493
+[grid@whister ~]$ srvctl stop asm -f
+[grid@whister ~]$ srvctl stop asm -f
+[grid@whister ~]$ exit
+logout
+
+[root@whister ~]# . oraenv
+ORACLE_SID = [root] ? +ASM
+The Oracle base has been set to /u01/app/grid
+[root@whister ~]# crsctl stop has
+
+[root@whister ~]# asmcmd afd_configure
+.
+.
+ASMCMD-9524: AFD configuration failed 'ERROR: OHASD start failed'
+[root@whister ~]# asmcmd afd_state
+Connected to an idle instance.
+ASMCMD-9526: The AFD state is 'LOADED' and filtering is 'DEFAULT' on host 'whister.zoomer'
+[root@whister ~]# crsctl start has
+CRS-4123: Oracle High Availability Services has been started.
+
+[root@whister ~]# su - grid
+[grid@whister ~]$ . oraenv
+ORACLE_SID = [grid] ? +ASM
+The Oracle base has been set to /u01/app/grid
+[grid@whister ~]$ asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      5128     4897                0            4897              0             N  DATA/
+MOUNTED  EXTERN  N         512   4096  1048576      5128     3384                0            3384              0             N  FRA/
+[grid@whister ~]$ srvctl stop diskgroup -diskgroup data -f
+PRCR-1065 : Failed to stop resource ora.DATA.dg
+CRS-2675: Stop of 'ora.DATA.dg' on 'whister' failed
+
+[grid@whister ~]$ srvctl stop diskgroup -diskgroup fra -f
+
+[grid@whister ~]$ srvctl stop diskgroup -diskgroup data -f
+
+[grid@whister ~]$ asmcmd afd_label ASMDISK1 /dev/sdb --migrate
+[grid@whister ~]$ asmcmd afd_label ASMDISK2 /dev/sdc --migrate
+[grid@whister ~]$ asmcmd afd_scan
+[grid@whister ~]$ srvctl start diskgroup -diskgroup data
+[grid@whister ~]$ srvctl start diskgroup -diskgroup fra
+[grid@whister ~]$ asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      5128     4897                0            4897              0             N  DATA/
+MOUNTED  EXTERN  N         512   4096  1048576      5128     3384                0            3384              0             N  FRA/
+[grid@whister ~]$ asmcmd lsdsk
+Path
+AFD:ASMDISK1
+AFD:ASMDISK2
+[grid@whister ~]$ 

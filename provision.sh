@@ -55,8 +55,27 @@ popd
 # Run asmca
 # Create DATA and FRA
 # Need command line for scripting
+# https://docs.oracle.com/database/121/OSTMG/GUID-877EB0F8-E9CA-4C97-965C-AACBB256B12D.htm#OSTMG94309
+
+sudo -E -H -u grid /u01/app/12.1.0.2/grid/bin/asmcmd lsdg
+if [ $? ne 0 ]; then
+  echo "Configuring ASM..."
+  asmca -silent -configureASM -diskList '/dev/sdb, /dev/sdc' –sysAsmPassword oracle11 -asmsnmpPassword oracle11
+# AU size is the disk extent size in Mb
+  echo "Creating ASM DATA disk..."
+  asmca -silent -createDiskGroup -diskGroupName DATA -disk '/dev/sdb' -redundancy EXTERNAL -au_size 4 -compatible.asm '11.2.0.0.0'\
+   -compatible.rdbms '11.2.0.0.0' -compatible.advm '11.2.0.0.0'
+
+  echo "Creating ASM FRA disk..."
+  asmca -silent -createDiskGroup -diskGroupName FRA -disk '/dev/sdc' -redundancy EXTERNAL -au_size 4 -compatible.asm '11.2.0.0.0'\
+   -compatible.rdbms '11.2.0.0.0' -compatible.advm '11.2.0.0.0'
+else
+  echo "Skipping ASMCA."
+fi
+
 
 # Configure disks to use ASMFD
+# https://docs.oracle.com/database/121/OSTMG/GUID-06B3337C-07A3-4B3F-B6CD-04F2916C11F6.htm
 
 # ./runInstaller for db software
 # Saved responsefile in /vagrant for command line scripting

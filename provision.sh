@@ -15,43 +15,46 @@ service ntpd status && service ntpd restart || service ntpd start
 chkconfig ntpd on
 
 # Installing Grid Infrastructure Using a Software-Only Installation
-# NB /etc/resolv.conf - server can't find logitech: NXDOMAIN (skipped prereqs) - fix later
-if [ ! -f /u01/app/${VERSION}/grid/root.sh ]; then
-  echo "Installing Grid software..."
-  sudo -E -H -u grid /u01/stage/grid/runInstaller -silent -ignoreSysPrereqs  -ignorePrereq -waitforcompletion  \
-  oracle.install.asm.SYSASMPassword=oracle12 oracle.install.asm.monitorPassword=oracle12 \
-  ORACLE_HOSTNAME=logitech.sprite.zero \
-  INVENTORY_LOCATION=/u01/app/oraInventory \
-  SELECTED_LANGUAGES=en \
-  oracle.install.option=CRS_SWONLY \
-  ORACLE_BASE=/u01/app/grid \
-  ORACLE_HOME=/u01/app/12.1.0.2/grid \
-  oracle.install.asm.OSDBA=asmdba \
-  oracle.install.asm.OSOPER=asmoper \
-  oracle.install.asm.OSASM=asmadmin \
-  oracle.install.crs.config.ClusterType=STANDARD \
-  oracle.install.crs.config.gpnp.configureGNS=false \
-  oracle.install.crs.config.sharedFileSystemStorage.votingDiskRedundancy=NORMAL \
-  oracle.install.crs.config.sharedFileSystemStorage.ocrRedundancy=NORMAL \
-  oracle.install.crs.config.useIPMI=false \
-  oracle.install.crs.config.ignoreDownNodes=false \
-  oracle.install.config.managementOption=NONE 
+# NB /etc/resolv.conf - server can't find <domain>: NXDOMAIN (skipped prereqs) - fix later
+if [ -f /u01/app/${VERSION}/grid/root.sh ]; then
+  echo "OK: found oracle grid software installed"
+else
+  echo "WARN: not found oracle grid software installed"
+  if [ -f /u01/stage/grid/runInstaller ]; then
+    echo "OK: found oracle grid software installer, will try to install"
+    echo "NOTE: This may take upto 25 minutes, press CTRL-C to cancel"
+    for i in {1..5}; do echo . ; sleep 1; done
+    echo "Installing Grid software..."
+    sudo -E -H -u grid /u01/stage/grid/runInstaller -silent -ignoreSysPrereqs  -ignorePrereq -waitforcompletion  \
+    oracle.install.asm.SYSASMPassword=oracle12 oracle.install.asm.monitorPassword=oracle12 \
+    ORACLE_HOSTNAME=$HOSTNAME \
+    INVENTORY_LOCATION=/u01/app/oraInventory \
+    SELECTED_LANGUAGES=en \
+    oracle.install.option=CRS_SWONLY \
+    ORACLE_BASE=/u01/app/grid \
+    ORACLE_HOME=/u01/app/12.1.0.2/grid \
+    oracle.install.asm.OSDBA=asmdba \
+    oracle.install.asm.OSOPER=asmoper \
+    oracle.install.asm.OSASM=asmadmin \
+    oracle.install.crs.config.ClusterType=STANDARD \
+    oracle.install.crs.config.gpnp.configureGNS=false \
+    oracle.install.crs.config.sharedFileSystemStorage.votingDiskRedundancy=NORMAL \
+    oracle.install.crs.config.sharedFileSystemStorage.ocrRedundancy=NORMAL \
+    oracle.install.crs.config.useIPMI=false \
+    oracle.install.crs.config.ignoreDownNodes=false \
+    oracle.install.config.managementOption=NONE 
+  fi
+fi
 
+for disk in /dev/sd[b-z]; do
+  [ -b $disk ] && chown grid:asmadmin $disk
+done
 
-  /u01/app/oraInventory/orainstRoot.sh
-  /u01/app/${VERSION}/grid/root.sh
+/u01/app/oraInventory/orainstRoot.sh
+/u01/app/${VERSION}/grid/root.sh
 
 # Configuring Grid for standalone
 /u01/app/12.1.0.2/grid/perl/bin/perl -I/u01/app/12.1.0.2/grid/perl/lib -I/u01/app/12.1.0.2/grid/crs/install /u01/app/12.1.0.2/grid/crs/install/roothas.pl
-
-else
-  echo "Skipping Grid Installation."
-fi
-
-pushd /dev
-  chown grid:dba sdb
-  chown grid:dba sdc
-popd
 
 # Run asmca
 # Create DATA and FRA

@@ -70,8 +70,23 @@ sudo -E -H -u grid /u01/app/12.1.0.2/grid/bin/asmca -silent -createDiskGroup -di
 
 # Configure disks to use ASMFD
 # https://docs.oracle.com/database/121/OSTMG/GUID-06B3337C-07A3-4B3F-B6CD-04F2916C11F6.htm
-
-
+export ORACLE_SID=+ASM
+export PATH=$PATH:$ORACLE_HOME/bin
+sudo -E -H -u grid $ORACLE_HOME/bin/srvctl stop asm -f
+sudo -E -H -u grid $ORACLE_HOME/bin/srvctl stop asm -f
+crsctl stop has
+asmcmd afd_configure
+asmcmd afd_state
+crsctl start has
+sudo -E -H -u grid $ORACLE_HOME/bin/srvctl stop diskgroup -diskgroup data -f
+sudo -E -H -u grid $ORACLE_HOME/bin/srvctl stop diskgroup -diskgroup fra -f
+sudo -E -H -u grid $ORACLE_HOME/bin/asmcmd afd_label ASMDISK1 /dev/sdb --migrate
+sudo -E -H -u grid $ORACLE_HOME/bin/asmcmd afd_label ASMDISK2 /dev/sdc --migrate
+sudo -E -H -u grid $ORACLE_HOME/bin/asmcmd afd_scan
+sudo -E -H -u grid $ORACLE_HOME/bin/srvctl start diskgroup -diskgroup data
+sudo -E -H -u grid $ORACLE_HOME/bin/srvctl start diskgroup -diskgroup fra
+sudo -E -H -u grid $ORACLE_HOME/bin/asmcmd lsdg
+sudo -E -H -u grid $ORACLE_HOME/bin/asmcmd lsdsk
 
 
 # ./runInstaller for db software

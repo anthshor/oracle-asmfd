@@ -51,8 +51,14 @@ for disk in /dev/sd[b-z]; do
 done
 
 /u01/app/oraInventory/orainstRoot.sh
-/u01/app/${VERSION}/grid/root.sh
+if [ -f /u01/app/${VERSION}/grid/root.sh.run ]; then
+  echo "OK: /u01/app/${VERSION}/grid/root.sh already run"
+else
+  /u01/app/${VERSION}/grid/root.sh
+  touch /u01/app/${VERSION}/grid/root.sh.run
+fi
 
+#this need to be run onces, what can be used to know if this was run?
 # Configuring Grid for standalone
 /u01/app/12.1.0.2/grid/perl/bin/perl -I/u01/app/12.1.0.2/grid/perl/lib -I/u01/app/12.1.0.2/grid/crs/install /u01/app/12.1.0.2/grid/crs/install/roothas.pl
 
@@ -62,15 +68,18 @@ done
 
 export ORACLE_HOME=/u01/app/12.1.0.2/grid
 
+#this need to be run onces, what can be used to know if this was run?
 echo "Configuring ASM and creating DATA disk group..."
 sudo -E -H -u grid /u01/app/12.1.0.2/grid/bin/asmca -silent -configureASM -sysAsmPassword oracle12 -asmsnmpPassword oracle12 -diskGroupName DATA \
 -disk '/dev/sdb' -redundancy EXTERNAL
   
+#this need to be run onces, what can be used to know if this was run?  
 # AU size is the disk extent size in Mb - leave default
 echo "Creating ASM FRA disk..."
 sudo -E -H -u grid /u01/app/12.1.0.2/grid/bin/asmca -silent -createDiskGroup -diskGroupName FRA -disk '/dev/sdc' -redundancy EXTERNAL 
 
 
+#this need to be run onces, what can be used to know if this was run?
 # Configure disks to use ASMFD
 # https://docs.oracle.com/database/121/OSTMG/GUID-06B3337C-07A3-4B3F-B6CD-04F2916C11F6.htm
 export ORACLE_SID=+ASM

@@ -1,4 +1,4 @@
-# Oracle Grid using ASM with asmfd
+# Oracle asmfd
 Oracle Grid install with ASM using asmfd
 
 ```

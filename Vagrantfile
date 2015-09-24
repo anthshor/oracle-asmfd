@@ -17,5 +17,8 @@ Vagrant.configure(2) do |config|
       vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', port, '--device', '0', '--type', 'hdd', '--medium', disk]
     end
   end
-  config.vm.provision "shell",  path: "provision.sh"
+  config.vm.provision "shell",  path: "install_grid.sh"
+  config.vm.provision "shell",  path: "provision_asm.sh"
+  config.vm.provision "shell",  path: "install_db.sh"
+  config.vm.provision "shell",  path: "provision_db.sh"
 end

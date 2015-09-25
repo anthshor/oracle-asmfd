@@ -21,4 +21,5 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell",  path: "provision_asm.sh"
   config.vm.provision "shell",  path: "install_db.sh"
   config.vm.provision "shell",  path: "provision_db.sh"
+  config.vm.provision "shell",  path: "create_db.sh"
 end

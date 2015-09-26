@@ -11,7 +11,7 @@ export VERSION="12.1.0.2"
 [ -f /proxy/.proxy.env ] && source /proxy/.proxy.env
 
 # Start NTP daemon
-service ntpd status && service ntpd restart || service ntpd start
+service ntpd status || service ntpd start
 chkconfig ntpd on
 
 for disk in /dev/sd[b-z]; do
@@ -20,7 +20,7 @@ done
 
 /u01/app/oraInventory/orainstRoot.sh
 if [ -f /u01/app/${VERSION}/grid/root.sh.run ]; then
-  echo "OK: /u01/app/${VERSION}/grid/root.sh already run"
+  echo "INFO: /u01/app/${VERSION}/grid/root.sh already run"
 else
   /u01/app/${VERSION}/grid/root.sh
   touch /u01/app/${VERSION}/grid/root.sh.run
@@ -29,7 +29,7 @@ fi
 export ORACLE_HOME=/u01/app/12.1.0.2/grid
 
 # Configuring Grid for standalone
-$ORACLE_HOME/bin/crsctl config has
+$ORACLE_HOME/bin/crsctl config has 2>/dev/null
 if [ $? -ne 0 ]; then
   echo "Configuring Grid"
   /u01/app/12.1.0.2/grid/perl/bin/perl -I/u01/app/12.1.0.2/grid/perl/lib -I/u01/app/12.1.0.2/grid/crs/install /u01/app/12.1.0.2/grid/crs/install/roothas.pl

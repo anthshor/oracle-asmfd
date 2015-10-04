@@ -36,6 +36,7 @@ else
     oracle.install.crs.config.ignoreDownNodes=false \
     oracle.install.config.managementOption=NONE 
     if [ $? -eq 0 ]; then
+      /u01/app/oraInventory/orainstRoot.sh
       rm -rf $STAGE/grid
     fi
   fi

@@ -9,7 +9,7 @@ export PASSWORD="Password1#"
 export VERSION="12.1.0.2"
 
 if [ -f /u01/app/oracle/product/${VERSION}/dbhome_1/root.sh ]; then
-  echo "INFO: found oracle grid software installed"
+  echo "INFO: found oracle database software installed"
 else 
   echo "INFO: not found database software installed"
   if [ -f /u01/stage/database/runInstaller ]; then
@@ -36,7 +36,7 @@ else
 	SECURITY_UPDATES_VIA_MYORACLESUPPORT=false \
 	DECLINE_SECURITY_UPDATES=true
     if [ $? -eq 0 ]; then
-      rm -rf $STAGE/grid
+      rm -rf $STAGE/database
     fi
   fi
 fi

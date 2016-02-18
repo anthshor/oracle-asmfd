@@ -13,6 +13,6 @@ if [ $? -eq 0 ]; then
 else
 	echo "INFO: Creating database ${ORACLE_SID}..."
 	sudo -E -H -u oracle /u01/app/oracle/product/${VERSION}/dbhome_1/bin/dbca -silent -createDatabase -templateName General_Purpose.dbc -gdbName $ORACLE_SID -sid $ORACLE_SID -sysPassword $PASSWORD \
-	-systemPassword $PASSWORD -emConfiguration LOCAL -storageType ASM -diskGroupName +DATA -recoveryGroupName +FRA \
+	-systemPassword $PASSWORD -emConfiguration LOCAL -storageType ASM -diskGroupName DATA -recoveryGroupName FRA \
 	-characterset WE8ISO8859P1 -obfuscatedPasswords false -sampleSchema false -asmSysPassword $ASMPWD
 fi

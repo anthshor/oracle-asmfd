@@ -90,4 +90,5 @@ fi
 
 # dbca to create db
 
-# netca required?
+# Add default listener
+sudo -E -H -u grid $ORACLE_HOME/bin/srvctl add listener

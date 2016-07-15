@@ -1,0 +1,200 @@
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'anthshor/ol6-oracledb'...
+[KProgress: 10%[KProgress: 20%[KProgress: 30%[KProgress: 40%[KProgress: 50%[KProgress: 60%[KProgress: 70%[KProgress: 80%[KProgress: 90%[K==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'anthshor/ol6-oracledb' is up to date...
+==> default: There was a problem while downloading the metadata for your box
+==> default: to check for updates. This is not an error, since it is usually due
+==> default: to temporary network problems. This is just a warning. The problem
+==> default: encountered was:
+==> default: 
+==> default: The requested URL returned error: 404 Not Found
+==> default: 
+==> default: If you want to check for box updates, verify your network connection
+==> default: is valid and try again.
+==> default: Setting the name of the VM: whister.zoomer
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+    default: Adapter 2: hostonly
+==> default: Forwarding ports...
+    default: 22 => 2222 (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Connection timeout. Retrying...
+    default: Warning: Connection timeout. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+    default: 
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default: 
+    default: Inserting generated public key within guest...
+    default: Removing insecure key from the guest if it's present...
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> default: Machine booted and ready!
+==> default: Checking for guest additions in VM...
+==> default: Setting hostname...
+==> default: Configuring and enabling network interfaces...
+==> default: Mounting shared folders...
+    default: /proxy => /Users/anthonyshorter/proxy
+    default: /vagrant => /Users/anthonyshorter/HC/oracle-asmfd
+==> default: Running provisioner: shell...
+    default: Running: inline script
+==> default: Running provisioner: shell...
+    default: Running: /var/folders/qv/m3gzvwfs7tx0knx3f0yj7svw0000gn/T/vagrant-shell20160715-5798-d3ejud.sh
+==> default: OK: found oracle grid software installed
+==> default: Running provisioner: shell...
+    default: Running: /var/folders/qv/m3gzvwfs7tx0knx3f0yj7svw0000gn/T/vagrant-shell20160715-5798-1yr1klo.sh
+==> default: ntpd (pid  6568) is running...
+==> default: Changing permissions of /u01/app/oraInventory.
+==> default: Adding read,write permissions for group.
+==> default: Removing read,write,execute permissions for world.
+==> default: Changing groupname of /u01/app/oraInventory to oinstall.
+==> default: The execution of the script is complete.
+==> default: Check /u01/app/12.1.0.2/grid/install/root_whister.zoomer_2016-07-15_19-20-45.log for the output of root script
+==> default: Configuring Grid
+==> default: Using configuration parameter file: /u01/app/12.1.0.2/grid/crs/install/crsconfig_params
+==> default: LOCAL ADD MODE 
+==> default: Creating OCR keys for user 'grid', privgrp 'oinstall'..
+==> default: Operation successful.
+==> default: LOCAL ONLY MODE 
+==> default: Successfully accumulated necessary OCR keys.
+==> default: Creating OCR keys for user 'root', privgrp 'root'..
+==> default: Operation successful.
+==> default: CRS-4664: Node whister successfully pinned.
+==> default: 2016/07/15 19:21:11 CLSRSC-330: Adding Clusterware entries to file 'oracle-ohasd.conf'
+==> default: [0m
+==> default: 
+==> default: whister     2016/07/15 19:21:30     /u01/app/12.1.0.2/grid/cdata/whister/backup_20160715_192130.olr     0     
+==> default: CRS-2791: Starting shutdown of Oracle High Availability Services-managed resources on 'whister'
+==> default: CRS-2673: Attempting to stop 'ora.evmd' on 'whister'
+==> default: CRS-2677: Stop of 'ora.evmd' on 'whister' succeeded
+==> default: CRS-2793: Shutdown of Oracle High Availability Services-managed resources on 'whister' has completed
+==> default: CRS-4133: Oracle High Availability Services has been stopped.
+==> default: CRS-4123: Oracle High Availability Services has been started.
+==> default: [1m
+==> default: 2016/07/15 19:22:46 CLSRSC-327: Successfully configured Oracle Restart for a standalone server
+==> default: [0m
+==> default: [0m
+==> default: 
+==> default: Parsing command line arguments:
+==> default:     Parameter "silent" = true
+==> default:     Parameter "responsefile" = /u01/app/12.1.0.2/grid/assistants/netca/netca.rsp
+==> default: Done parsing command line arguments.
+==> default: Oracle Net Services Configuration:
+==> default: Profile configuration complete.
+==> default: Oracle Net Listener Startup:
+==> default:     Listener started successfully.
+==> default: Listener configuration complete.
+==> default: Oracle Net Services configuration successful. The exit code is 0
+==> default: Connected to an idle instance.
+==> default: ASMCMD-8102: no connection to Oracle ASM; command requires Oracle ASM to run
+==> default: Configuring ASM and creating DATA disk group...
+==> default: ASM created and started successfully.
+==> default: 
+==> default: Disk Group DATA created successfully.
+==> default: ASMCMD-8001: diskgroup 'FRA' does not exist or is not mounted
+==> default: Creating ASM FRA disk...
+==> default: Disk Group FRA created successfully.
+==> default: Migrating to asmfd
+==> default: PRCR-1005 : Resource ora.asm is already stopped
+==> default: CRS-2791: Starting shutdown of Oracle High Availability Services-managed resources on 'whister'
+==> default: CRS-2673: Attempting to stop 'ora.LISTENER.lsnr' on 'whister'
+==> default: CRS-2673: Attempting to stop 'ora.evmd' on 'whister'
+==> default: CRS-2677: Stop of 'ora.LISTENER.lsnr' on 'whister' succeeded
+==> default: CRS-2677: Stop of 'ora.evmd' on 'whister' succeeded
+==> default: CRS-2673: Attempting to stop 'ora.cssd' on 'whister'
+==> default: CRS-2677: Stop of 'ora.cssd' on 'whister' succeeded
+==> default: CRS-2793: Shutdown of Oracle High Availability Services-managed resources on 'whister' has completed
+==> default: CRS-4133: Oracle High Availability Services has been stopped.
+==> default: Connected to an idle instance.
+==> default: AFD-627: AFD distribution files found.
+==> default: AFD-636: Installing requested AFD software.
+==> default: AFD-637: Loading installed AFD drivers.
+==> default: AFD-9321: Creating udev for AFD.
+==> default: AFD-9323: Creating module dependencies - this may take some time.
+==> default: AFD-9154: Loading 'oracleafd.ko' driver.
+==> default: AFD-649: Verifying AFD devices.
+==> default: AFD-9156: Detecting control device '/dev/oracleafd/admin'.
+==> default: AFD-638: AFD installation correctness verified.
+==> default: Modifying resource dependencies - this may take some time.
+==> default: ASMCMD-9524: AFD configuration failed 'ERROR: OHASD start failed'
+==> default: Connected to an idle instance.
+==> default: ASMCMD-9526: The AFD state is 'LOADED' and filtering is 'DEFAULT' on host 'whister.zoomer'
+==> default: CRS-4123: Oracle High Availability Services has been started.
+==> default: PRCR-1005 : Resource ora.DATA.dg is already stopped
+==> default: PRCR-1005 : Resource ora.FRA.dg is already stopped
+==> default: Connected to an idle instance.
+==> default: Connected to an idle instance.
+==> default: Connected to an idle instance.
+==> default: PRCC-1014 : fra was already running
+==> default: PRCR-1004 : Resource ora.FRA.dg is already running
+==> default: PRCR-1079 : Failed to start resource ora.FRA.dg
+==> default: CRS-5702: Resource 'ora.FRA.dg' is already running on 'whister'
+==> default: State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+==> default: MOUNTED  EXTERN  N         512   4096  1048576      5128     5066                0            5066              0             N  DATA/
+==> default: MOUNTED  EXTERN  N         512   4096  1048576      5128     5075                0            5075              0             N  FRA/
+==> default: Path
+==> default: AFD:ASMDISK1
+==> default: AFD:ASMDISK2
+==> default: Running provisioner: shell...
+    default: Running: /var/folders/qv/m3gzvwfs7tx0knx3f0yj7svw0000gn/T/vagrant-shell20160715-5798-63qkvu.sh
+==> default: INFO: not found database software installed
+==> default: INFO: Found Oracle software installer, will try to install
+==> default: INFO: This may take upto 25 minutes, press CTRL-C to cancel
+==> default: .
+==> default: .
+==> default: .
+==> default: .
+==> default: .
+==> default: Installing database software...
+==> default: Starting Oracle Universal Installer...
+==> default: 
+==> default: Checking Temp space: must be greater than 500 MB.   Actual 25467 MB    Passed
+==> default: Checking swap space: must be greater than 150 MB.   Actual 3071 MB    Passed
+==> default: Preparing to launch Oracle Universal Installer from /tmp/OraInstall2016-07-15_07-26-23PM. Please wait ...
+==> default: You can find the log of this install session at:
+==> default:  /u01/app/oraInventory/logs/installActions2016-07-15_07-26-23PM.log
+==> default: The installation of Oracle Database 12c was successful.
+==> default: Please check '/u01/app/oraInventory/logs/silentInstall2016-07-15_07-26-23PM.log' for more details.
+==> default: 
+==> default: As a root user, execute the following script(s):
+==> default: 	1. /u01/app/oracle/product/12.1.0.2/dbhome_1/root.sh
+==> default: Successfully Setup Software.
+==> default: Running provisioner: shell...
+    default: Running: /var/folders/qv/m3gzvwfs7tx0knx3f0yj7svw0000gn/T/vagrant-shell20160715-5798-l63zm4.sh
+==> default: Check /u01/app/oracle/product/12.1.0.2/dbhome_1/install/root_whister.zoomer_2016-07-15_19-33-21.log for the output of root script
+==> default: Running provisioner: shell...
+    default: Running: /var/folders/qv/m3gzvwfs7tx0knx3f0yj7svw0000gn/T/vagrant-shell20160715-5798-cun1bm.sh
+==> default: INFO: Creating database fred...
+==> default: Registering database with Oracle Restart
+==> default: 5% complete
+==> default: Copying database files
+==> default: 7% complete
+==> default: 9% complete
+==> default: 16% complete
+==> default: 23% complete
+==> default: 30% complete
+==> default: 37% complete
+==> default: 41% complete
+==> default: Creating and starting Oracle instance
+==> default: 43% complete
+==> default: 48% complete
+==> default: 53% complete
+==> default: 57% complete
+==> default: 58% complete
+==> default: 59% complete
+==> default: 62% complete
+==> default: 64% complete
+==> default: Completing Database Creation
+==> default: 68% complete
+==> default: 71% complete
+==> default: 75% complete
+==> default: 85% complete
+==> default: 96% complete
+==> default: 100% complete
+==> default: Look at the log file "/u01/app/oracle/cfgtoollogs/dbca/fred/fred.log" for further details.

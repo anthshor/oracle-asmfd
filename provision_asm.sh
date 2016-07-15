@@ -36,6 +36,10 @@ if [ $? -ne 0 ]; then
 else
   echo "Grid already configured, skipping..."
 fi
+#
+# Run netca to install LISTENER under grid home
+#
+sudo -E -H -u grid /u01/app/12.1.0.2/grid/bin/netca -silent -responsefile /u01/app/12.1.0.2/grid/assistants/netca/netca.rsp
 
 # Run asmca
 # Create DATA and FRA
@@ -85,10 +89,4 @@ else
   echo "Already migrated to asmfd, skipping..."
 fi
 
-# ./runInstaller for db software
-# Saved responsefile in /vagrant for command line scripting
 
-# dbca to create db
-
-# Add default listener
-sudo -E -H -u grid $ORACLE_HOME/bin/srvctl add listener
